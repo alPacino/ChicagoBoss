@@ -14,21 +14,27 @@ ensure_started(App) ->
 	{error, {already_started, App}} ->
 	    ok
     end.
-	
+
 %% @spec start() -> ok
 %% @doc Start the boss server.
 start() ->
     is_compatible(erlang:system_info(otp_release)),
     ensure_started(crypto),
     ensure_started(mimetypes),
+    ensure_started(asn1),
+    ensure_started(public_key),
+    ensure_started(ssl),
     application:start(boss).
 
 %% @spec stop() -> ok
 %% @doc Stop the boss server.
 stop() ->
-    Res = application:stop(boss),    
-    application:stop(mimetypes),    
+    Res = application:stop(boss),
+    application:stop(mimetypes),
     application:stop(crypto),
+    application:stop(ssl),
+    application:stop(public_key),
+    application:stop(asn1),
     Res.
 
 is_compatible("R16B03") ->
