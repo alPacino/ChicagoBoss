@@ -30,11 +30,11 @@ start() ->
 %% @doc Stop the boss server.
 stop() ->
     Res = application:stop(boss),
-    application:stop(mimetypes),
-    application:stop(crypto),
     application:stop(ssl),
     application:stop(public_key),
     application:stop(asn1),
+    application:stop(mimetypes),
+    application:stop(crypto),
     Res.
 
 is_compatible("R16B03") ->
